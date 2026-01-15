@@ -16,8 +16,8 @@ CLASS zcl_16_main_airplanes IMPLEMENTATION.
 
     " Instanziierung
     TRY.
-        airplane = NEW #( id                    = 'D-ABUK'
-                          plane_type            = 'Airbus A380-800'
+        airplane = NEW #( id                   = 'D-ABUK'
+                          plane_type           = 'Airbus A380-800'
                           empty_weight_in_tons = '277' ).
         APPEND airplane TO airplanes.
       CATCH zcx_abap_initial_parameter INTO DATA(x).
@@ -26,19 +26,21 @@ CLASS zcl_16_main_airplanes IMPLEMENTATION.
 
     TRY.
 
-        airplane = NEW #( id                    = 'D-AIND'
-                          plane_type            = 'Airbus A320-200'
-                          empty_weight_in_tons = '42' ).
+        airplane = NEW zcl_16_cargo_plane( id                   = 'D-AIND'
+                                           plane_type           = 'Airbus A320-200'
+                                           empty_weight_in_tons = '42'
+                                           cargo_in_tons        = 40 ).
         APPEND airplane TO airplanes.
-      CATCH zcx_abap_initial_parameter into x.
+      CATCH zcx_abap_initial_parameter INTO x.
         out->write( x->get_text( ) ).
     ENDTRY.
 
     TRY.
 
-        airplane = NEW #( id                    = 'D-AJKF'
-                          plane_type            = 'Boeing 747-400F'
-                          empty_weight_in_tons = '166' ).
+        airplane = NEW zcl_16_passenger_plane( id                   = 'D-AJKF'
+                                               plane_type           = 'Boeing 747-400F'
+                                               empty_weight_in_tons = '166'
+                                               number_of_seats                = 200 ).
         APPEND airplane TO airplanes.
       CATCH zcx_abap_initial_parameter INTO x.
         out->write( x->get_text( ) ).
@@ -48,7 +50,7 @@ CLASS zcl_16_main_airplanes IMPLEMENTATION.
 
     " Ausgabe
     LOOP AT airplanes INTO airplane.
-      out->write( |{ airplane->id }, { airplane->plane_type }, { airplane->empty_weight_in_tons }t | ).
+      out->write( airplane->to_string(  ) ).
     ENDLOOP.
   ENDMETHOD.
 ENDCLASS.

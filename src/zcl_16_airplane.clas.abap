@@ -1,50 +1,58 @@
 CLASS zcl_16_airplane DEFINITION
-  PUBLIC FINAL
+  PUBLIC
   CREATE PUBLIC.
 
   PUBLIC SECTION.
-    METHODS constructor IMPORTING !id                   TYPE string
-                                  !plane_type            TYPE string
-                                  !empty_weight_in_tons TYPE string
-                        raising zcx_abap_initial_parameter.
+    METHODS constructor IMPORTING !id                  TYPE string
+                                  plane_type           TYPE string
+                                  empty_weight_in_tons TYPE string
+                        RAISING   zcx_abap_initial_parameter.
 
-   methods get_total_weight_in_tons
-           returning value(total_weight_in_tons) type i.
+    METHODS to_string RETURNING VALUE(string) TYPE string.
 
-    DATA id                    TYPE string READ-ONLY.
-    DATA plane_type            TYPE string READ-ONLY. " Getter/Setter mit cmd + 1 generieren lassen
+    METHODS get_total_weight_in_tons
+      RETURNING VALUE(total_weight_in_tons) TYPE i.
+
+    DATA id                   TYPE string READ-ONLY.
+    DATA plane_type           TYPE string READ-ONLY. " Getter/Setter mit cmd + 1 generieren lassen
     DATA empty_weight_in_tons TYPE i      READ-ONLY. " das read only erlaubt attribute trotz public nur von der klasse bearbeiten zu lassen
 
     CLASS-DATA number_of_airplanes TYPE i READ-ONLY.
+
+    PROTECTED SECTION.
+    PRIVATE SECTION.
 
 ENDCLASS.
 
 
 CLASS zcl_16_airplane IMPLEMENTATION.
   METHOD constructor.
+    IF id IS INITIAL.
+      RAISE EXCEPTION NEW zcx_abap_initial_parameter( parameter = id ).
+    ENDIF.
 
-  if id is INITIAL.
-    raise exception new zcx_abap_initial_parameter( parameter = id ).
-  endif.
+    IF plane_type IS INITIAL.
+      RAISE EXCEPTION NEW zcx_abap_initial_parameter( parameter = plane_type ).
+    ENDIF.
 
-  if plane_type is initial.
-    raise exception new zcx_abap_initial_parameter( parameter = plane_type ).
-  endif.
+    IF empty_weight_in_tons IS INITIAL.
+      RAISE EXCEPTION NEW zcx_abap_initial_parameter( parameter = empty_weight_in_tons ).
+    ENDIF.
 
-  if empty_weight_in_tons is initial.
-    raise exception new zcx_abap_initial_parameter( parameter = empty_weight_in_tons ).
-  endif.
-
-    me->id                    = id.
-    me->plane_type            = plane_type.
+    me->id                   = id.
+    me->plane_type           = plane_type.
     me->empty_weight_in_tons = empty_weight_in_tons.
 
     number_of_airplanes += 1.
   ENDMETHOD.
 
-  method get_total_weight_in_tons.
+  METHOD get_total_weight_in_tons.
     total_weight_in_tons = empty_weight_in_tons * 11 / 10.
-  endmethod.
+  ENDMETHOD.
+
+  METHOD to_string.
+    string = |{ id }, { plane_type }, { empty_weight_in_tons }t|.
+  ENDMETHOD.
 ENDCLASS.
 
 
