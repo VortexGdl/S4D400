@@ -50,7 +50,7 @@ CLASS zcl_16_main_airplanes IMPLEMENTATION.
 
     " Ausgabe
     LOOP AT airplanes INTO airplane.
-      out->write( airplane->to_string(  ) ).
+      out->write( |{ airplane->to_string(  ) }, Total weight: { airplane->get_total_weight_in_tons(  ) }t| ).
     ENDLOOP.
   ENDMETHOD.
 ENDCLASS.
