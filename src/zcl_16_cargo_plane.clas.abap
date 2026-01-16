@@ -43,7 +43,7 @@ CLASS zcl_16_cargo_plane IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD to_string.
-    string = |{ id }, { plane_type }, { empty_weight_in_tons }t, { cargo_in_tons }t|.
+    string = |{ id }, { plane_type }, { empty_weight_in_tons }t, Maximale Last: { cargo_in_tons }t|.
   ENDMETHOD.
 
 ENDCLASS.
