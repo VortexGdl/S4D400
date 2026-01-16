@@ -1,4 +1,4 @@
-CLASS zcl_16_airplane DEFINITION
+CLASS zcl_16_airplane DEFINITION Abstract
   PUBLIC
   CREATE PUBLIC.
 
@@ -10,7 +10,7 @@ CLASS zcl_16_airplane DEFINITION
 
     METHODS to_string RETURNING VALUE(string) TYPE string.
 
-    METHODS get_total_weight_in_tons
+    METHODS get_total_weight_in_tons abstract   " abstrakte methoden dürfen nicht implementiert werden, sie sind nur zum vererben
       RETURNING VALUE(total_weight_in_tons) TYPE i.
 
     DATA id                   TYPE string READ-ONLY.
@@ -19,8 +19,9 @@ CLASS zcl_16_airplane DEFINITION
 
     CLASS-DATA number_of_airplanes TYPE i READ-ONLY.
 
-    PROTECTED SECTION.
-    PRIVATE SECTION.
+  PROTECTED SECTION.
+
+  PRIVATE SECTION.
 
 ENDCLASS.
 
@@ -44,10 +45,6 @@ CLASS zcl_16_airplane IMPLEMENTATION.
     me->empty_weight_in_tons = empty_weight_in_tons.
 
     number_of_airplanes += 1.
-  ENDMETHOD.
-
-  METHOD get_total_weight_in_tons.
-    total_weight_in_tons = empty_weight_in_tons * 11 / 10.
   ENDMETHOD.
 
   METHOD to_string.
