@@ -15,6 +15,10 @@ CLASS zcl_16_main_vehicles IMPLEMENTATION.
     DATA vehicles TYPE TABLE OF REF TO zcl_16_vehicle.
     DATA truck    TYPE REF TO zcl_16_truck.
 
+    DATA rental TYPE ref to zcl_16_rental.
+    data carrier TYPE REF to zcl_16_carrier.
+    DATA partners type table of ref to zif_16_partner.
+
     " Instanziierungen
     out->write( zcl_16_vehicle=>number_of_vehicles ).
 
@@ -33,6 +37,12 @@ CLASS zcl_16_main_vehicles IMPLEMENTATION.
                               seats = 5 ). " Upcast
     APPEND vehicle TO vehicles.
 
+    rental = new #( ).
+    carrier = new #( 'Lufthansa' ).
+
+    append rental to partners. "Upcast
+    append carrier to partners.
+
     out->write( zcl_16_vehicle=>number_of_vehicles ).
 
     " Ausgabe
@@ -41,7 +51,7 @@ CLASS zcl_16_main_vehicles IMPLEMENTATION.
           vehicle->accelerate( 30 ).
           vehicle->brake( 20 ).
           vehicle->accelerate( 100 ).
-        CATCH zcx_00_value_too_high INTO DATA(x).
+        CATCH zcx_16_value_too_high INTO DATA(x).
           out->write( x->get_text( ) ).
       ENDTRY.
       IF vehicle IS INSTANCE OF zcl_16_truck.
@@ -53,5 +63,15 @@ CLASS zcl_16_main_vehicles IMPLEMENTATION.
       ENDIF.
       out->write( vehicle->to_string( ) ). " (Dynamische) Polymorphie
     ENDLOOP.
+
+    LOOP AT partners into data(partner).
+      out->write( partner->to_string(  ) ).
+
+      if partner is instance of zcl_16_carrier.
+        carrier = cast #( partner ). " Downcast
+        out->write( carrier->get_biggest_cargo_plane( ) ).
+      endif.
+    endloop.
+
   ENDMETHOD.
 ENDCLASS.

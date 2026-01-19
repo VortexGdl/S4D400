@@ -3,6 +3,9 @@ CLASS zcl_16_carrier DEFINITION
   CREATE PUBLIC.
 
   PUBLIC SECTION.
+
+  interfaces zif_16_partner.
+
     METHODS constructor             IMPORTING !name                      TYPE string.
 
     METHODS add_airplane            IMPORTING airplane                   TYPE REF TO zcl_16_airplane.
@@ -38,4 +41,8 @@ CLASS zcl_16_carrier IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
   ENDMETHOD.
+
+  method zif_16_partner~to_string.
+  string = 'ich bin die Fluggesellschaft'.
+  endmethod.
 ENDCLASS.
