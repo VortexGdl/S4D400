@@ -1,4 +1,4 @@
-CLASS zcl_16_vehicle DEFINITION
+CLASS zcl_16_vehicle DEFINITION abstract
   PUBLIC
   CREATE PUBLIC.
 

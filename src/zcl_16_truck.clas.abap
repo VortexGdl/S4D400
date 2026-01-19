@@ -30,7 +30,7 @@ CLASS zcl_16_truck IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD to_string.
-    string = super->to_string( ).
+    string = |{ make } { model } ({ speed_in_kmh }km/h)|.
     string &&= |, Cargo capacity: { cargo_in_tons }t|.
   ENDMETHOD.
 
