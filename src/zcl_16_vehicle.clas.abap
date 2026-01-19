@@ -6,10 +6,10 @@ CLASS zcl_16_vehicle DEFINITION
     METHODS constructor IMPORTING make  TYPE string
                                   model TYPE string.
 
-    METHODS accelerate IMPORTING !value TYPE i
+    METHODS accelerate FINAL IMPORTING !value TYPE i
                        RAISING   zcx_00_value_too_high.
 
-    METHODS brake IMPORTING !value TYPE i
+    METHODS brake FINAL IMPORTING !value TYPE i
                   RAISING   zcx_00_value_too_high.
 
     METHODS to_string RETURNING VALUE(string) TYPE string.
